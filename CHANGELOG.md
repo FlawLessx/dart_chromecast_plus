@@ -6,7 +6,8 @@
 - Queue operation (Next, Prev)
 - Custom namespace
 - Get current play media index inside queue
-- Tracks (Add & Set active track)
+- Track (Add & Set active track)
+- Text track style
 - Playback rate
 
 ## 0.3.3
