@@ -1,10 +1,9 @@
 import 'dart:convert';
-import 'dart:convert' show utf8;
 import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
-import 'package:logging/logging.dart';
+import 'package:logger/logger.dart';
 import 'package:universal_io/io.dart';
 
 enum CastDeviceType {
@@ -25,7 +24,7 @@ enum GoogleCastModelType {
 }
 
 class CastDevice {
-  final Logger log = Logger('CastDevice');
+  final Logger log = Logger();
 
   final String? name;
   final String? type;
@@ -59,8 +58,12 @@ class CastDevice {
     initDeviceInfo();
   }
 
-  void initDeviceInfo() async {
+  Future<void> initDeviceInfo() async {
     if (CastDeviceType.ChromeCast == deviceType) {
+      if (attr != null) {
+        log.i(attr);
+      }
+
       if (null != attr && null != attr!['fn']) {
         _friendlyName = utf8.decode(attr!['fn']!);
         if (null != attr!['md']) {
@@ -91,7 +94,7 @@ class CastDevice {
             _modelName = deviceInfo['model_name'];
           }
         } catch (exception) {
-          print(exception.toString());
+          log.e(exception.toString());
         }
       }
     }

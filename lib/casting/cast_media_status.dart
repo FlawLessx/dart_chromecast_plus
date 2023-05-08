@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'package:logging/logging.dart';
+import 'package:dart_chromecast/casting/cast.dart';
 
 class CastMediaStatus {
-  final Logger log = new Logger('CastMediaStatus');
-
   dynamic _sessionId;
 
   final String? _nativeStatus;
@@ -18,11 +16,13 @@ class CastMediaStatus {
   final bool _isBuffering;
   final double? _volume;
   final double? _position;
-  final Map? _media;
+  final int? _currentItemId;
+  final Media? _mediaInfo;
 
   CastMediaStatus.fromChromeCastMediaStatus(Map mediaStatus)
       : _sessionId = mediaStatus['mediaSessionId'],
         _nativeStatus = mediaStatus['playerState'],
+        _currentItemId = mediaStatus['currentItemId'],
         _isIdle = 'IDLE' == mediaStatus['playerState'],
         _isPlaying = 'PLAYING' == mediaStatus['playerState'],
         _isPaused = 'PAUSED' == mediaStatus['playerState'],
@@ -40,11 +40,15 @@ class CastMediaStatus {
             ? mediaStatus['volume']['level'].toDouble()
             : null,
         _position = mediaStatus['currentTime'].toDouble(),
-        _media = mediaStatus['media'];
+        _mediaInfo = mediaStatus['extendedStatus'] != null
+            ? Media.fromJson(mediaStatus['extendedStatus']['media'])
+            : null;
 
   dynamic get sessionId => _sessionId;
 
   String? get nativeStatus => _nativeStatus;
+
+  int? get currentItemId => _currentItemId;
 
   bool get isIdle => _isIdle;
 
@@ -68,7 +72,7 @@ class CastMediaStatus {
 
   double? get position => _position;
 
-  Map? get media => _media;
+  Media? get media => _mediaInfo;
 
   @override
   String toString() {
@@ -86,7 +90,7 @@ class CastMediaStatus {
       'hasError': _hasError,
       'volume': _volume,
       'position': _position,
-      'media': _media
+      'media': _mediaInfo?.toJson()
     });
   }
 }
