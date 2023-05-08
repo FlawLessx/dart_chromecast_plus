@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:dart_chromecast/casting/cast.dart';
+import 'package:dart_chromecast_plus/casting/cast.dart';
 
 class CastMediaStatus {
   dynamic _sessionId;

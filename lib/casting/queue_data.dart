@@ -1,4 +1,4 @@
-import 'package:dart_chromecast/casting/queue_item.dart';
+import 'package:dart_chromecast_plus/casting/queue_item.dart';
 
 class QueueData {
   QueueData({

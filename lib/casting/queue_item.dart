@@ -1,4 +1,4 @@
-import 'package:dart_chromecast/casting/cast_media.dart';
+import 'package:dart_chromecast_plus/casting/cast_media.dart';
 
 class QueueItem {
   QueueItem({

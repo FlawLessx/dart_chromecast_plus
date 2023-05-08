@@ -1,4 +1,4 @@
-import 'package:dart_chromecast/casting/track.dart';
+import 'package:dart_chromecast_plus/casting/track.dart';
 
 import 'text_track_style.dart';
 

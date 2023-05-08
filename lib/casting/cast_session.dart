@@ -1,4 +1,4 @@
-import 'package:dart_chromecast/casting/cast_media_status.dart';
+import 'package:dart_chromecast_plus/casting/cast_media_status.dart';
 
 class CastSession {
   String? sourceId;

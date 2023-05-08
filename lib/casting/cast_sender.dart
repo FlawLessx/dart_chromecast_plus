@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:developer' as dev;
 
-import 'package:dart_chromecast/casting/cast.dart';
-import 'package:dart_chromecast/casting/connection_channel.dart';
-import 'package:dart_chromecast/casting/heartbeat_channel.dart';
-import 'package:dart_chromecast/casting/media_channel.dart';
-import 'package:dart_chromecast/casting/queue_data.dart';
-import 'package:dart_chromecast/casting/queue_item.dart';
-import 'package:dart_chromecast/casting/receiver_channel.dart';
-import 'package:dart_chromecast/proto/cast_channel.pb.dart';
+import 'package:dart_chromecast_plus/casting/cast.dart';
+import 'package:dart_chromecast_plus/casting/connection_channel.dart';
+import 'package:dart_chromecast_plus/casting/heartbeat_channel.dart';
+import 'package:dart_chromecast_plus/casting/media_channel.dart';
+import 'package:dart_chromecast_plus/casting/queue_data.dart';
+import 'package:dart_chromecast_plus/casting/queue_item.dart';
+import 'package:dart_chromecast_plus/casting/receiver_channel.dart';
+import 'package:dart_chromecast_plus/proto/cast_channel.pb.dart';
 import 'package:logger/logger.dart';
 import 'package:universal_io/io.dart';
 

@@ -1,4 +1,4 @@
-import 'package:dart_chromecast/casting/cast_channel.dart';
+import 'package:dart_chromecast_plus/casting/cast_channel.dart';
 import 'package:universal_io/io.dart';
 
 class MediaChannel extends CastChannel {

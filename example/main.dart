@@ -2,10 +2,13 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:args/args.dart';
-import 'package:dart_chromecast/casting/cast.dart';
-import 'package:dart_chromecast/utils/mdns_find_chromecast.dart'
+import 'package:dart_chromecast_plus/casting/cast.dart';
+import 'package:dart_chromecast_plus/utils/mdns_find_chromecast.dart'
     as find_chromecast;
+import 'package:logger/logger.dart';
 import 'package:universal_io/io.dart';
+
+final Logger log = new Logger();
 
 void main(List<String> arguments) async {
   // Create an argument parser so we can read the cli's arguments and options
@@ -68,6 +71,8 @@ void main(List<String> arguments) async {
     port = pickedDevice.port;
 
     print("Connecting to device: $host:$port");
+
+    log.d("Picked: $pickedDevice");
   }
 
   startCasting(media, host, port, argResults['append']);
@@ -75,6 +80,8 @@ void main(List<String> arguments) async {
 
 void startCasting(
     List<CastMedia> media, String host, int? port, bool? append) async {
+  log.i('Start Casting');
+
   // try to load previous state saved as json in saved_cast_state.json
   Map? savedState;
   try {
@@ -82,6 +89,7 @@ void startCasting(
     savedState = jsonDecode(await savedStateFile.readAsString());
   } catch (e) {
     // does not exist yet
+    log.w('error fetching saved state' + e.toString());
   }
 
   // create the chromecast device with the passed in host and port
@@ -106,6 +114,7 @@ void startCasting(
         'time': DateTime.now().millisecondsSinceEpoch,
       }..addAll(castSession.toMap());
       await savedStateFile.writeAsString(jsonEncode(map));
+      log.d('Cast session was saved to saved_cast_state.json.');
     }
   });
 
@@ -120,10 +129,12 @@ void startCasting(
     if (null != prevMediaStatus &&
         mediaStatus.volume != prevMediaStatus!.volume) {
       // volume just updated
+      log.i('Volume just updated to ${mediaStatus.volume}');
     }
     if (null == prevMediaStatus ||
         mediaStatus.position != prevMediaStatus?.position) {
       // update the current progress
+      log.i('Media Position is ${mediaStatus.position}');
     }
     prevMediaStatus = mediaStatus;
   });
@@ -150,8 +161,10 @@ void startCasting(
   }
 
   if (!connected) {
+    log.w('COULD NOT CONNECT!');
     return;
   }
+  log.i("Connected with device");
 
   if (!didReconnect) {
     // dont relaunch if we just reconnected, because that would reset the player state
@@ -159,6 +172,7 @@ void startCasting(
   }
 
   // load CastMedia playlist and send it to the chromecast
+  //
   castSender.loadPlaylist(media, append: append);
 
   // Initiate key press handler
@@ -180,6 +194,8 @@ void _handleUserInput(CastSender castSender, List<int> data) {
   if (data.length == 0) return;
 
   int keyCode = data.last;
+
+  log.i("pressed key with key code: ${keyCode}");
 
   if (32 == keyCode) {
     // space = toggle pause

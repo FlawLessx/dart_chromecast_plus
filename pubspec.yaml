@@ -1,17 +1,18 @@
-name: dart_chromecast
-version: 0.3.3
-description: Pure dart package to cast videos to your ChromeCast device and control their playback
-homepage: https://github.com/terrabythia/dart_chromecast
+name: dart_chromecast_plus
+version: 0.3.4
+description: Pure dart package to cast videos to your ChromeCast device and
+  control their playback
+homepage: https://github.com/FlawLessx/dart_chromecast_plus
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
-  universal_io: ^2.2.0
-  protobuf: ^2.1.0
-  http: ^0.13.5
-  cli_util: ^0.4.0
   args: ^2.3.1
-  xml: ^6.1.0
+  cli_util: ^0.4.0
+  http: ^0.13.5
   logger: ^1.3.0
   multicast_dns: ^0.3.2+3
+  protobuf: ^2.1.0
+  universal_io: ^2.2.0
+  xml: ^6.1.0
